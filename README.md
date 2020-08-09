@@ -2,6 +2,11 @@
 
 # DenSaE (dense and sparse auto-encoder)
 
+### Trained Models
+
+Trained models are stored in `src/results/trained_models`.
+
+##
 ### PATH
 
 For any scripts to run, make sure you are in `densae/src` directory.
@@ -54,7 +59,9 @@ def exp1():
 ##
 ### Results
 
-When training is done, the results are saved in `results/{experiment_name}/{random_date}`. `random_date` is a datetime string generated at the begining of the training.
+When training is done, the results are saved in `results/{experiment_name}/{random_date}`. 
+
+`random_date` is a datetime string generated at the begining of the training.
 
 ##
 ### Prediction
