@@ -43,7 +43,7 @@ def cfg():
         "info_period": 10000,
         "crop_dim": (128, 128),
         "lam": 0.15,
-        "rho": 0.2,
+        "rho": 1e10,
         "weight_decay": 0,
         "supervised": True,
         "shuffle": True,
