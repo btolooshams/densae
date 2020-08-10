@@ -19,7 +19,7 @@ import sys
 
 sys.path.append("src/")
 
-import generator, trainer, utils, plot_helpers
+import model, generator, trainer, utils, plot_helpers
 
 import warnings
 
@@ -37,8 +37,8 @@ def predict():
     name = "noise15_cscnet_tied_ls"
     random_date = "2020_05_27_14_51_29"
     csc1_densae0 = 1
-    plot_bias = 1
-    noiseSTD = 15
+    plot_bias = 0
+
     num_epochs = 249
 
     experiment_name = os.path.join(name)
@@ -179,7 +179,6 @@ def predict():
 
             img_hat, r = net(img_noisy)
 
-
             torchvision.utils.save_image(
                 img.clone(), os.path.join(PATH, "{}_img.png".format(img_list[ctr])),
             )
@@ -188,7 +187,7 @@ def predict():
                 os.path.join(PATH, "{}_noisy.png".format(img_list[ctr])),
             )
             torchvision.utils.save_image(
-                bu_hat.clone(),
+                img_hat.clone(),
                 os.path.join(PATH, "{}_img_hat.png".format(img_list[ctr])),
             )
 
