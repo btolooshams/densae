@@ -4,12 +4,12 @@
 
 ### Trained Models
 
-Trained models are stored in `src/results/trained_models`.
+Trained models are stored in `results/trained_models`.
 
 ##
 ### PATH
 
-For any scripts to run, make sure you are in `densae/src` directory.
+For any scripts to run, make sure you are in `src` directory.
 
 ##
 ### Configuration
@@ -20,7 +20,7 @@ Create a configuration function in `conf.py` containing a dictionary of hyperpar
 ```
 @config_ingredient.named_config
 def exp1():
-    hyp = { 
+    hyp = {
         "experiment_name": "noise15_densae_1A_63B_hyp",
         "network": "CSCNetTiedLS",
         "noiseSTD": 15,
@@ -59,11 +59,11 @@ def exp1():
 ##
 ### Results
 
-When training is done, the results are saved in `results/{experiment_name}/{random_date}`. 
+When training is done, the results are saved in `results/{experiment_name}/{random_date}`.
 
 `random_date` is a datetime string generated at the begining of the training.
 
 ##
 ### Prediction
 
-Run `predict.py`. Make sure to specify the parameters from line 37 - 42 . 
+Run `predict.py`. Make sure to specify the parameters from line 37 - 42.
