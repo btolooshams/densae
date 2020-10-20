@@ -37,6 +37,9 @@ warnings.filterwarnings("ignore")
 
 ex = Experiment("train", ingredients=[config_ingredient])
 
+import resource
+rlimit = resource.getrlimit(resource.RLIMIT_NOFILE)
+resource.setrlimit(resource.RLIMIT_NOFILE, (20480, rlimit[1]))
 
 @ex.automain
 def run(cfg):
@@ -61,45 +64,125 @@ def run(cfg):
         train_loader = generator.get_train_path_loader(
             hyp["batch_size"], hyp["train_path"], crop_dim=hyp["crop_dim"], shuffle=True
         )
-        test_loader = generator.get_path_loader(1, hyp["test_path"], shuffle=False)
+        test_loader = generator.get_test_path_loader(1, hyp["test_path"], shuffle=False)
+    elif hyp["dataset"] == "mnist":
+        train_loader, val_loader, test_loader = generator.get_MNIST_loaders(
+            hyp["batch_size"], hyp["shuffle"]
+        )
     else:
         print("dataset is not implemented!")
 
-    print("create model.")
-    #### Bu
-    if hyp["network"] == "CSCNetTiedHyp":
-        net = model.CSCNetTiedHyp(hyp)
-    elif hyp["network"] == "CSCNetTiedLS":
-        net = model.CSCNetTiedLS(hyp)
-    elif hyp["network"] == "DenSaE":
-        net = model.DenSaE(hyp)
+    # disjoint classification training
+    if hyp["classification"]:
+        net = torch.load(hyp["model_path"], map_location=hyp["device"])
+        classifier = model.Classifier(hyp)
+
+        enc_tr_loader, enc_val_loader, enc_te_loader = generator.get_encoding_loaders(
+            train_loader, val_loader, test_loader, net, hyp
+        )
+
+        optimizer = optim.Adam(
+            classifier.parameters(), lr=hyp["lr"], eps=hyp["eps"], weight_decay=hyp["weight_decay"]
+        )
+
+        scheduler = optim.lr_scheduler.StepLR(
+            optimizer, step_size=hyp["lr_step"], gamma=hyp["lr_decay"]
+        )
+
+        criterion_class = torch.nn.CrossEntropyLoss()
+
+        print("train classifier.")
+        acc = trainer.train_classifier(
+            classifier, enc_tr_loader, hyp, criterion_class, optimizer,
+            scheduler,
+            writer,
+            PATH,
+            enc_val_loader,
+            enc_te_loader,
+        )
     else:
-        print("model does not exist!")
+        print("create model.")
+        if hyp["warm_start"]:
+            net = torch.load(hyp["model_path"], map_location=hyp["device"])
+            net.device = hyp["device"]
+        else:
+            if hyp["network"] == "CSCNetTiedHyp":
+                net = model.CSCNetTiedHyp(hyp)
+            elif hyp["network"] == "CSCNetTiedLS":
+                net = model.CSCNetTiedLS(hyp)
+            elif hyp["network"] == "DenSaE":
+                net = model.DenSaE(hyp)
+            else:
+                print("model does not exist!")
 
-    torch.save(net, os.path.join(PATH, "model_init.pt"))
+        torch.save(net, os.path.join(PATH, "model_init.pt"))
 
-    if hyp["loss"] == "l2":
-        criterion = utils.L2loss()
-    else:
-        print("loss is not implemented!")
+        if hyp["loss"] == "l2":
+            criterion = utils.L2loss()
+        else:
+            print("loss is not implemented!")
 
-    optimizer = optim.Adam(
-        net.parameters(), lr=hyp["lr"], eps=1e-3, weight_decay=hyp["weight_decay"]
-    )
+        if hyp["train_joint_ae_class"]:
+            classifier = model.Classifier(hyp)
+            criterion_class = torch.nn.CrossEntropyLoss()
 
-    scheduler = optim.lr_scheduler.StepLR(
-        optimizer, step_size=hyp["lr_step"], gamma=hyp["lr_decay"]
-    )
+            params = []
+            for param in net.parameters():
+                params.append(param)
+            for param in classifier.parameters():
+                params.append(param)
 
-    print("train auto-encoder.")
-    net = trainer.train_ae(
-        net,
-        train_loader,
-        hyp,
-        criterion,
-        optimizer,
-        scheduler,
-        writer,
-        PATH,
-        test_loader,
-    )
+            optimizer = optim.Adam(
+                params, lr=hyp["lr"], eps=hyp["eps"], weight_decay=hyp["weight_decay"]
+            )
+        else:
+            optimizer = optim.Adam(
+                net.parameters(), lr=hyp["lr"], eps=hyp["eps"], weight_decay=hyp["weight_decay"]
+            )
+
+        scheduler = optim.lr_scheduler.StepLR(
+            optimizer, step_size=hyp["lr_step"], gamma=hyp["lr_decay"]
+        )
+
+        print("train auto-encoder.")
+        if hyp["dataset"] == "mnist":
+            if hyp["train_joint_ae_class"]:
+                net = trainer.train_join_ae_class_mnist(
+                    net,
+                    classifier,
+                    train_loader,
+                    hyp,
+                    criterion,
+                    criterion_class,
+                    optimizer,
+                    scheduler,
+                    writer,
+                    PATH,
+                    val_loader,
+                    test_loader,
+                )
+            else:
+                net = trainer.train_ae_mnist(
+                    net,
+                    train_loader,
+                    hyp,
+                    criterion,
+                    optimizer,
+                    scheduler,
+                    writer,
+                    PATH,
+                    val_loader,
+                    test_loader,
+                )
+        else:
+            net = trainer.train_ae(
+                net,
+                train_loader,
+                hyp,
+                criterion,
+                optimizer,
+                scheduler,
+                writer,
+                PATH,
+                test_loader,
+            )
