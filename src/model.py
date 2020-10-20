@@ -13,6 +13,20 @@ import numpy as np
 import utils
 
 
+class Classifier(torch.nn.Module):
+    def __init__(self, hyp):
+        super(Classifier, self).__init__()
+
+        self.D_input = hyp["D_input"]
+        self.D_output = hyp["D_output"]
+        self.device = hyp["device"]
+
+        self.classifier = torch.nn.Linear(self.D_input, self.D_output)
+        self.classifier = self.classifier.to(self.device)
+
+    def forward(self, x):
+        return self.classifier(x)
+
 class CSCNetTiedHyp(torch.nn.Module):
     def __init__(self, hyp, B=None):
         super(CSCNetTiedHyp, self).__init__()
@@ -226,8 +240,18 @@ class CSCNetTiedLS(torch.nn.Module):
         valids_batched = valids_batched.reshape(-1, *valids_batched.shape[2:])
         return y_batched_padded, valids_batched
 
+    def shrinkage(self, z):
+        if self.twosided:
+            z = self.relu(torch.abs(z) - self.b) * torch.sign(z)
+        else:
+            z = self.relu(z - self.b)
+        return z
+
     def forward(self, y):
-        y_batched_padded, valids_batched = self.split_image(y)
+        if self.stride > 1:
+            y_batched_padded, valids_batched = self.split_image(y)
+        else:
+            y_batched_padded = y
 
         num_batches = y_batched_padded.shape[0]
 
@@ -258,14 +282,8 @@ class CSCNetTiedLS(torch.nn.Module):
             Bx = F.conv_transpose2d(x_tmp, self.get_param("B"), stride=self.stride)
             res = y_batched_padded - Bx
 
-            x_new = (
-                x_tmp + F.conv2d(res, self.get_param("B"), stride=self.stride) / self.L
-            )
-
-            if self.twosided:
-                x_new = self.relu(torch.abs(x_new) - self.b) * torch.sign(x_new)
-            else:
-                x_new = self.relu(x_new - self.b)
+            x_new = x_tmp + F.conv2d(res, self.get_param("B"), stride=self.stride) / self.L
+            x_new = self.shrinkage(x_new)
 
             t_new = (1 + torch.sqrt(1 + 4 * t_old * t_old)) / 2
             x_tmp = x_new + ((t_old - 1) / t_new) * (x_new - x_old)
@@ -273,12 +291,15 @@ class CSCNetTiedLS(torch.nn.Module):
             x_old = x_new
             t_old = t_new
 
-        y_hat = (
-            torch.masked_select(
-                F.conv_transpose2d(x_new, self.get_param("B"), stride=self.stride),
-                valids_batched.byte(),
-            ).reshape(y.shape[0], self.stride ** 2, *y.shape[1:])
-        ).mean(dim=1, keepdim=False)
+        if self.stride > 1:
+            y_hat = (
+                torch.masked_select(
+                    F.conv_transpose2d(x_new, self.get_param("B"), stride=self.stride),
+                    valids_batched.byte(),
+                ).reshape(y.shape[0], self.stride ** 2, *y.shape[1:])
+            ).mean(dim=1, keepdim=False)
+        else:
+            y_hat = F.conv_transpose2d(x_new, self.get_param("B"), stride=self.stride)
 
         return y_hat, x_new
 
@@ -293,8 +314,10 @@ class DenSaE(torch.nn.Module):
         self.num_conv_B = hyp["num_conv_B"]
         self.dictionary_dim = hyp["dictionary_dim"]
         self.device = hyp["device"]
-        self.stride = hyp["stride"]
+        self.strideA = hyp["strideA"]
+        self.strideB = hyp["strideB"]
         self.twosided = hyp["twosided"]
+        self.split_stride = hyp["split_stride"]
         self.lam = hyp["lam"]
         self.rho = hyp["rho"]
 
@@ -329,14 +352,14 @@ class DenSaE(torch.nn.Module):
         )
 
     def split_image(self, y):
-        if self.stride == 1:
+        if self.split_stride == 1:
             return y, torch.ones_like(y)
         left_pad, right_pad, top_pad, bot_pad = utils.calc_pad_sizes(
-            y, self.dictionary_dim, self.stride
+            y, self.dictionary_dim, self.split_stride
         )
         y_batched_padded = torch.zeros(
             y.shape[0],
-            self.stride ** 2,
+            self.split_stride ** 2,
             y.shape[1],
             top_pad + y.shape[2] + bot_pad,
             left_pad + y.shape[3] + right_pad,
@@ -344,7 +367,7 @@ class DenSaE(torch.nn.Module):
         ).type_as(y)
         valids_batched = torch.zeros_like(y_batched_padded)
         for num, (row_shift, col_shift) in enumerate(
-            [(i, j) for i in range(self.stride) for j in range(self.stride)]
+            [(i, j) for i in range(self.split_stride) for j in range(self.split_stride)]
         ):
             y_padded = F.pad(
                 y,
@@ -372,24 +395,25 @@ class DenSaE(torch.nn.Module):
         valids_batched = valids_batched.reshape(-1, *valids_batched.shape[2:])
         return y_batched_padded, valids_batched
 
+    def shrinkage(self, z):
+        if self.twosided:
+            z = self.relu(torch.abs(z) - self.lam / self.L) * torch.sign(z)
+        else:
+            z = self.relu(z - self.lam / self.L)
+        return z
+
     def forward(self, y):
         y_batched_padded, valids_batched = self.split_image(y)
 
         num_batches = y_batched_padded.shape[0]
 
-        D_x1 = F.conv2d(
-            y_batched_padded, self.get_param("A"), stride=self.stride
-        ).shape[2]
-        D_x2 = F.conv2d(
-            y_batched_padded, self.get_param("A"), stride=self.stride
-        ).shape[3]
+        [D_x1, D_x2] = F.conv2d(
+            y_batched_padded, self.get_param("A"), stride=self.strideA
+        ).shape[2:]
 
-        D_u1 = F.conv2d(
-            y_batched_padded, self.get_param("B"), stride=self.stride
-        ).shape[2]
-        D_u2 = F.conv2d(
-            y_batched_padded, self.get_param("B"), stride=self.stride
-        ).shape[3]
+        [D_u1, D_u2] = F.conv2d(
+            y_batched_padded, self.get_param("B"), stride=self.strideB
+        ).shape[2:]
 
         x_old = torch.zeros(
             num_batches, self.num_conv_A, D_x1, D_x2, device=self.device
@@ -421,25 +445,20 @@ class DenSaE(torch.nn.Module):
 
         for t in range(self.T):
             Ax = F.conv_transpose2d(
-                (1 + 1.0 / self.rho) * x_tmp, self.get_param("A"), stride=self.stride
+                (1 + 1.0 / self.rho) * x_tmp, self.get_param("A"), stride=self.strideA
             )
-            Bu = F.conv_transpose2d(u_tmp, self.get_param("B"), stride=self.stride)
+            Bu = F.conv_transpose2d(u_tmp, self.get_param("B"), stride=self.strideB)
 
             res = y_batched_padded - (Ax + Bu)
 
             x_new = (
-                x_tmp + F.conv2d(res, self.get_param("A"), stride=self.stride) / self.L
+                x_tmp + F.conv2d(res, self.get_param("A"), stride=self.strideA) / self.L
             )
             u_new = (
-                u_tmp + F.conv2d(res, self.get_param("B"), stride=self.stride) / self.L
+                u_tmp + F.conv2d(res, self.get_param("B"), stride=self.strideB) / self.L
             )
 
-            if self.twosided:
-                u_new = self.relu(torch.abs(u_new) - self.lam / self.L) * torch.sign(
-                    u_new
-                )
-            else:
-                u_new = self.relu(u_new - self.lam / self.L)
+            u_new = self.shrinkage(u_new)
 
             t_new = (1 + torch.sqrt(1 + 4 * t_old * t_old)) / 2
 
@@ -450,18 +469,22 @@ class DenSaE(torch.nn.Module):
             u_old = u_new
             t_old = t_new
 
-        Ax_hat = (
-            torch.masked_select(
-                F.conv_transpose2d(x_new, self.get_param("A"), stride=self.stride),
-                valids_batched.byte(),
-            ).reshape(y.shape[0], self.stride ** 2, *y.shape[1:])
-        ).mean(dim=1, keepdim=False)
-        Bu_hat = (
-            torch.masked_select(
-                F.conv_transpose2d(u_new, self.get_param("B"), stride=self.stride),
-                valids_batched.byte(),
-            ).reshape(y.shape[0], self.stride ** 2, *y.shape[1:])
-        ).mean(dim=1, keepdim=False)
+        if self.split_stride > 1:
+            Ax_hat = (
+                torch.masked_select(
+                    F.conv_transpose2d(x_new, self.get_param("A"), stride=self.strideA),
+                    valids_batched.byte(),
+                ).reshape(y.shape[0], self.split_stride ** 2, *y.shape[1:])
+            ).mean(dim=1, keepdim=False)
+            Bu_hat = (
+                torch.masked_select(
+                    F.conv_transpose2d(u_new, self.get_param("B"), stride=self.strideB),
+                    valids_batched.byte(),
+                ).reshape(y.shape[0], self.split_stride ** 2, *y.shape[1:])
+            ).mean(dim=1, keepdim=False)
+        else:
+            Ax_hat = F.conv_transpose2d(x_new, self.get_param("A"), stride=self.strideA)
+            Bu_hat = F.conv_transpose2d(u_new, self.get_param("B"), stride=self.strideB)
 
         y_hat = Ax_hat + Bu_hat
 

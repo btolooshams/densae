@@ -220,12 +220,12 @@ def train_ae_mnist(
                 x_hat = out
             elif hyp["network"] == "CSCNetTiedhyp":
                 x_hat = out
-            elif hyp["network"] == "DenSaEhyp":
+            elif hyp["network"] == "DenSaE":
                 [x_hat, u_hat, Ax_hat, Bu_hat] = out
 
             plot_helpers.plot_img(img, img_hat, epoch, writer)
 
-            if hyp["network"] == "DenSaEhyp":
+            if hyp["network"] == "DenSaE":
                 plot_helpers.plot_axbu(Ax_hat, Bu_hat, epoch, writer)
                 plot_helpers.plot_code_axbu(x_hat, u_hat, net, epoch, writer, hyp["dense"], hyp["reshape"])
                 plot_helpers.plot_dict_axbu(net, epoch, writer)
@@ -291,7 +291,7 @@ def train_join_ae_class_mnist(
 
             img_hat, out = net(img_noisy)
 
-            if hyp["network"] == "DenSaEhypv2" or hyp["network"] == "DenSaEhyp":
+            if hyp["network"] == "DenSaEv2" or hyp["network"] == "DenSaE":
                 x, u, _, _ = out
 
                 u = u.reshape(-1, u.shape[1]*u.shape[2]*u.shape[3])
@@ -343,12 +343,12 @@ def train_join_ae_class_mnist(
                 x_hat = out
             elif hyp["network"] == "CSCNetTiedhyp":
                 x_hat = out
-            elif hyp["network"] == "DenSaEhyp":
+            elif hyp["network"] == "DenSaE":
                 [x_hat, u_hat, Ax_hat, Bu_hat] = out
 
             plot_helpers.plot_img(img, img_hat, epoch, writer)
 
-            if hyp["network"] == "DenSaEhyp":
+            if hyp["network"] == "DenSaE":
                 plot_helpers.plot_axbu(Ax_hat, Bu_hat, epoch, writer)
                 plot_helpers.plot_code_axbu(x_hat, u_hat, net, epoch, writer, hyp["dense"], hyp["reshape"])
                 plot_helpers.plot_dict_axbu(net, epoch, writer)
@@ -473,7 +473,7 @@ def test_network_joint(data_loader, net, classifier, hyp):
 
             _, out = net(img)
 
-            if hyp["network"] == "DenSaEhypv2" or hyp["network"] == "DenSaEhyp":
+            if hyp["network"] == "DenSaEv2" or hyp["network"] == "DenSaE":
                 x, u, _, _ = out
 
                 u = u.reshape(-1, u.shape[1]*u.shape[2]*u.shape[3])
