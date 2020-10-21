@@ -111,7 +111,7 @@ class EncodingDataset(torch.utils.data.Dataset):
 
             _, code = net(img)
 
-            if hyp["network"] == "DenSaEhyp":
+            if hyp["network"] == "DenSaE":
                 x, u, _, _ = code
 
                 u = u.clone().detach().requires_grad_(False)

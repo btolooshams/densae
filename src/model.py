@@ -302,8 +302,7 @@ class CSCNetTiedLS(torch.nn.Module):
             y_hat = F.conv_transpose2d(x_new, self.get_param("B"), stride=self.stride)
 
         return y_hat, x_new
-
-
+        
 class DenSaE(torch.nn.Module):
     def __init__(self, hyp, A=None, B=None):
         super(DenSaE, self).__init__()
