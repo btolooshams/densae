@@ -218,7 +218,7 @@ def train_ae_mnist(
 
             if hyp["network"] == "CSCNetTiedLS":
                 x_hat = out
-            elif hyp["network"] == "CSCNetTiedhyp":
+            elif hyp["network"] == "CSCNetTiedHyp":
                 x_hat = out
             elif hyp["network"] == "DenSaE":
                 [x_hat, u_hat, Ax_hat, Bu_hat] = out
@@ -227,10 +227,14 @@ def train_ae_mnist(
 
             if hyp["network"] == "DenSaE":
                 plot_helpers.plot_axbu(Ax_hat, Bu_hat, epoch, writer)
-                plot_helpers.plot_code_axbu(x_hat, u_hat, net, epoch, writer, hyp["dense"], hyp["reshape"])
+                plot_helpers.plot_code_axbu(
+                    x_hat, u_hat, net, epoch, writer, hyp["dense"], hyp["reshape"]
+                )
                 plot_helpers.plot_dict_axbu(net, epoch, writer)
             else:
-                plot_helpers.plot_code(x_hat, net, epoch, writer, hyp["dense"], hyp["reshape"])
+                plot_helpers.plot_code(
+                    x_hat, net, epoch, writer, hyp["dense"], hyp["reshape"]
+                )
                 plot_helpers.plot_dict(net, epoch, writer)
 
         if (epoch + 1) % loss_period == 0:
@@ -294,13 +298,13 @@ def train_join_ae_class_mnist(
             if hyp["network"] == "DenSaEv2" or hyp["network"] == "DenSaE":
                 x, u, _, _ = out
 
-                u = u.reshape(-1, u.shape[1]*u.shape[2]*u.shape[3])
-                x = x.reshape(-1, x.shape[1]*x.shape[2]*x.shape[3])
-                code = torch.cat([x,u], dim=-1)
+                u = u.reshape(-1, u.shape[1] * u.shape[2] * u.shape[3])
+                x = x.reshape(-1, x.shape[1] * x.shape[2] * x.shape[3])
+                code = torch.cat([x, u], dim=-1)
                 code = F.normalize(code, dim=1)
             else:
                 code = out
-                code = code.reshape(-1, code.shape[1]*code.shape[2]*code.shape[3])
+                code = code.reshape(-1, code.shape[1] * code.shape[2] * code.shape[3])
                 code = F.normalize(code, dim=1)
 
             c_hat = classifier(code)
@@ -341,7 +345,7 @@ def train_join_ae_class_mnist(
 
             if hyp["network"] == "CSCNetTiedLS":
                 x_hat = out
-            elif hyp["network"] == "CSCNetTiedhyp":
+            elif hyp["network"] == "CSCNetTiedHyp":
                 x_hat = out
             elif hyp["network"] == "DenSaE":
                 [x_hat, u_hat, Ax_hat, Bu_hat] = out
@@ -350,22 +354,33 @@ def train_join_ae_class_mnist(
 
             if hyp["network"] == "DenSaE":
                 plot_helpers.plot_axbu(Ax_hat, Bu_hat, epoch, writer)
-                plot_helpers.plot_code_axbu(x_hat, u_hat, net, epoch, writer, hyp["dense"], hyp["reshape"])
+                plot_helpers.plot_code_axbu(
+                    x_hat, u_hat, net, epoch, writer, hyp["dense"], hyp["reshape"]
+                )
                 plot_helpers.plot_dict_axbu(net, epoch, writer)
             else:
-                plot_helpers.plot_code(x_hat, net, epoch, writer, hyp["dense"], hyp["reshape"])
+                plot_helpers.plot_code(
+                    x_hat, net, epoch, writer, hyp["dense"], hyp["reshape"]
+                )
                 plot_helpers.plot_dict(net, epoch, writer)
 
         if (epoch + 1) % loss_period == 0:
             torch.save(loss_all, os.path.join(PATH, "loss_epoch{}.pt".format(epoch)))
         if (epoch + 1) % model_period == 0:
             torch.save(net, os.path.join(PATH, "model_epoch{}.pt".format(epoch)))
-            torch.save(classifier, os.path.join(PATH, "classifier_epoch{}.pt".format(epoch)))
+            torch.save(
+                classifier, os.path.join(PATH, "classifier_epoch{}.pt".format(epoch))
+            )
 
         if (epoch + 1) % info_period == 0:
             print(
                 "epoch [{}/{}], loss:{:.10f}, train acc:{:.4f}, val acc:{:.4f}, test acc:{:.4f}".format(
-                    epoch + 1, hyp["num_epochs"], loss.item(), train_acc, val_acc, test_acc
+                    epoch + 1,
+                    hyp["num_epochs"],
+                    loss.item(),
+                    train_acc,
+                    val_acc,
+                    test_acc,
                 )
             )
 
@@ -373,10 +388,19 @@ def train_join_ae_class_mnist(
 
     return net
 
-def train_classifier(
-    net, data_loader, hyp, criterion, optimizer, scheduler, writer, PATH, val_loader=None, test_loader=None,
-):
 
+def train_classifier(
+    net,
+    data_loader,
+    hyp,
+    criterion,
+    optimizer,
+    scheduler,
+    writer,
+    PATH,
+    val_loader=None,
+    test_loader=None,
+):
 
     info_period = hyp["info_period"]
     loss_period = hyp["loss_period"]
@@ -431,6 +455,7 @@ def train_classifier(
 
     return
 
+
 def test_network(data_loader, net, hyp):
 
     device = hyp["device"]
@@ -456,6 +481,7 @@ def test_network(data_loader, net, hyp):
 
     return acc
 
+
 def test_network_joint(data_loader, net, classifier, hyp):
 
     device = hyp["device"]
@@ -476,13 +502,13 @@ def test_network_joint(data_loader, net, classifier, hyp):
             if hyp["network"] == "DenSaEv2" or hyp["network"] == "DenSaE":
                 x, u, _, _ = out
 
-                u = u.reshape(-1, u.shape[1]*u.shape[2]*u.shape[3])
-                x = x.reshape(-1, x.shape[1]*x.shape[2]*x.shape[3])
-                code = torch.cat([x,u], dim=-1)
+                u = u.reshape(-1, u.shape[1] * u.shape[2] * u.shape[3])
+                x = x.reshape(-1, x.shape[1] * x.shape[2] * x.shape[3])
+                code = torch.cat([x, u], dim=-1)
                 code = F.normalize(code, dim=1)
             else:
                 code = out
-                code = code.reshape(-1, code.shape[1]*code.shape[2]*code.shape[3])
+                code = code.reshape(-1, code.shape[1] * code.shape[2] * code.shape[3])
                 code = F.normalize(code, dim=1)
 
             c_hat = classifier(code)

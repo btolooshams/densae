@@ -27,6 +27,7 @@ class Classifier(torch.nn.Module):
     def forward(self, x):
         return self.classifier(x)
 
+
 class CSCNetTiedHyp(torch.nn.Module):
     def __init__(self, hyp, B=None):
         super(CSCNetTiedHyp, self).__init__()
@@ -282,7 +283,9 @@ class CSCNetTiedLS(torch.nn.Module):
             Bx = F.conv_transpose2d(x_tmp, self.get_param("B"), stride=self.stride)
             res = y_batched_padded - Bx
 
-            x_new = x_tmp + F.conv2d(res, self.get_param("B"), stride=self.stride) / self.L
+            x_new = (
+                x_tmp + F.conv2d(res, self.get_param("B"), stride=self.stride) / self.L
+            )
             x_new = self.shrinkage(x_new)
 
             t_new = (1 + torch.sqrt(1 + 4 * t_old * t_old)) / 2
@@ -302,7 +305,8 @@ class CSCNetTiedLS(torch.nn.Module):
             y_hat = F.conv_transpose2d(x_new, self.get_param("B"), stride=self.stride)
 
         return y_hat, x_new
-        
+
+
 class DenSaE(torch.nn.Module):
     def __init__(self, hyp, A=None, B=None):
         super(DenSaE, self).__init__()

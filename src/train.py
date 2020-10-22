@@ -38,8 +38,10 @@ warnings.filterwarnings("ignore")
 ex = Experiment("train", ingredients=[config_ingredient])
 
 import resource
+
 rlimit = resource.getrlimit(resource.RLIMIT_NOFILE)
 resource.setrlimit(resource.RLIMIT_NOFILE, (20480, rlimit[1]))
+
 
 @ex.automain
 def run(cfg):
@@ -82,7 +84,10 @@ def run(cfg):
         )
 
         optimizer = optim.Adam(
-            classifier.parameters(), lr=hyp["lr"], eps=hyp["eps"], weight_decay=hyp["weight_decay"]
+            classifier.parameters(),
+            lr=hyp["lr"],
+            eps=hyp["eps"],
+            weight_decay=hyp["weight_decay"],
         )
 
         scheduler = optim.lr_scheduler.StepLR(
@@ -93,7 +98,11 @@ def run(cfg):
 
         print("train classifier.")
         acc = trainer.train_classifier(
-            classifier, enc_tr_loader, hyp, criterion_class, optimizer,
+            classifier,
+            enc_tr_loader,
+            hyp,
+            criterion_class,
+            optimizer,
             scheduler,
             writer,
             PATH,
@@ -137,7 +146,10 @@ def run(cfg):
             )
         else:
             optimizer = optim.Adam(
-                net.parameters(), lr=hyp["lr"], eps=hyp["eps"], weight_decay=hyp["weight_decay"]
+                net.parameters(),
+                lr=hyp["lr"],
+                eps=hyp["eps"],
+                weight_decay=hyp["weight_decay"],
             )
 
         scheduler = optim.lr_scheduler.StepLR(

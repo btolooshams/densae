@@ -63,12 +63,13 @@ def cfg():
         "train_joint_ae_class": False,
         "warm_start": False,
         "dense": False,
-        "reshape": (10,10),
+        "reshape": (10, 10),
         "train_path": "../data/CBSD432/",
         "test_path": "../data/BSD68/",
         "model_path": "...pt",
         "device": device,
     }
+
 
 ##########################################################
 ##########################################################
@@ -426,17 +427,18 @@ def noise75_densae_32A_32B_hyp():
 ####### cscnet_tied_ls ########
 ###############################
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15():
     hyp = {
-        "experiment_name": "paper/mnist/cscnet_400units_numiter15",
+        "experiment_name": "mnist/cscnet_400units_numiter15",
         "dense": True,
         "dataset": "mnist",
         "network": "CSCNetTiedLS",
         "noiseSTD": 0,
         "dictionary_dim": 28,
         "num_conv": 400,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "stride": 1,
         "split_stride": 1,
@@ -455,14 +457,15 @@ def mnist_cscnet_400units_numiter15():
         "model_period": 10,
         "loss_period": 10,
     }
+
 
 @config_ingredient.named_config
 def mnist_classification_cscnet_400units_numiter15():
     hyp = {
         "classification": True,
         "network": "CSCNetTiedLS",
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15/2020_10_07_23_40_14/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/cscnet_400units_numiter15",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_ls_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/cscnet_400units_numiter15",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -477,13 +480,14 @@ def mnist_classification_cscnet_400units_numiter15():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_joint_betap5():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_betap5",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_betap5",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15/2020_10_07_23_40_14/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_ls_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "CSCNetTiedLS",
@@ -492,7 +496,7 @@ def mnist_cscnet_400units_numiter15_joint_betap5():
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 0.5,
         "stride": 1,
@@ -513,13 +517,14 @@ def mnist_cscnet_400units_numiter15_joint_betap5():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_joint_betap75():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_betap75",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_betap75",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15/2020_10_07_23_40_14/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_ls_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "CSCNetTiedLS",
@@ -528,7 +533,7 @@ def mnist_cscnet_400units_numiter15_joint_betap75():
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 0.75,
         "stride": 1,
@@ -549,13 +554,14 @@ def mnist_cscnet_400units_numiter15_joint_betap75():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_joint_betap95():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_betap95",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_betap95",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15/2020_10_07_23_40_14/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_ls_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "CSCNetTiedLS",
@@ -564,7 +570,7 @@ def mnist_cscnet_400units_numiter15_joint_betap95():
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 0.95,
         "stride": 1,
@@ -585,13 +591,14 @@ def mnist_cscnet_400units_numiter15_joint_betap95():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_joint_beta1():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_beta1",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_beta1",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15/2020_10_07_23_40_14/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_ls_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "CSCNetTiedLS",
@@ -600,7 +607,7 @@ def mnist_cscnet_400units_numiter15_joint_beta1():
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 1,
         "stride": 1,
@@ -621,125 +628,23 @@ def mnist_cscnet_400units_numiter15_joint_beta1():
         "loss_period": 5,
     }
 
+
 ###############################
 ####### cscnet_tied_hyp #######
 ###############################
-# 0.005
-@config_ingredient.named_config
-def mnist_cscnet_400units_numiter15_hyp_bp005():
-    hyp = {
-        "experiment_name": "paper/mnist/cscnet_400units_numiter15_hyp_bp005",
-        "dense": True,
-        "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
-        "noiseSTD": 0,
-        "dictionary_dim": 28,
-        "num_conv": 400,
-        "reshape": (20,20),
-        "num_iters": 15,
-        "stride": 1,
-        "split_stride": 1,
-        "L": 50,
-        "b": 0.005,
-        "twosided": False,
-        "normalize": True,
-        "batch_size": 16,
-        "num_epochs": 150,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 100,
-        "eps": 1e-15,
-        "denoising": False,
-        "info_period": 10,
-        "model_period": 10,
-        "loss_period": 10,
-    }
 
-@config_ingredient.named_config
-def mnist_classification_cscnet_400units_numiter15_hyp_bp005():
-    hyp = {
-        "classification": True,
-        "network": "CSCNetTiedhyp",
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp005/2020_10_07_23_40_55/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/cscnet_400units_numiter15_hyp_bp005",
-        "dataset": "mnist",
-        "D_input": 400,
-        "D_output": 10,
-        "batch_size": 16,
-        "num_epochs": 1000,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 1000,
-        "eps": 1e-15,
-        "info_period": 5,
-        "model_period": 5,
-        "loss_period": 5,
-    }
 
-# 0.007
-@config_ingredient.named_config
-def mnist_cscnet_400units_numiter15_hyp_bp007():
-    hyp = {
-        "experiment_name": "paper/mnist/cscnet_400units_numiter15_hyp_bp007",
-        "dense": True,
-        "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
-        "noiseSTD": 0,
-        "dictionary_dim": 28,
-        "num_conv": 400,
-        "reshape": (20,20),
-        "num_iters": 15,
-        "stride": 1,
-        "split_stride": 1,
-        "L": 50,
-        "b": 0.007,
-        "twosided": False,
-        "normalize": True,
-        "batch_size": 16,
-        "num_epochs": 150,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 100,
-        "eps": 1e-15,
-        "denoising": False,
-        "info_period": 10,
-        "model_period": 10,
-        "loss_period": 10,
-    }
-
-@config_ingredient.named_config
-def mnist_classification_cscnet_400units_numiter15_hyp_bp007():
-    hyp = {
-        "classification": True,
-        "network": "CSCNetTiedhyp",
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp007/2020_10_08_00_05_44/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/cscnet_400units_numiter15_hyp_bp007",
-        "dataset": "mnist",
-        "D_input": 400,
-        "D_output": 10,
-        "batch_size": 16,
-        "num_epochs": 1000,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 1000,
-        "eps": 1e-15,
-        "info_period": 5,
-        "model_period": 5,
-        "loss_period": 5,
-    }
-
-# 0.01
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_hyp_bp01():
     hyp = {
-        "experiment_name": "paper/mnist/cscnet_400units_numiter15_hyp_bp01",
+        "experiment_name": "mnist/cscnet_400units_numiter15_hyp_bp01",
         "dense": True,
         "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
+        "network": "CSCNetTiedHyp",
         "noiseSTD": 0,
         "dictionary_dim": 28,
         "num_conv": 400,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "stride": 1,
         "split_stride": 1,
@@ -758,14 +663,15 @@ def mnist_cscnet_400units_numiter15_hyp_bp01():
         "model_period": 10,
         "loss_period": 10,
     }
+
 
 @config_ingredient.named_config
 def mnist_classification_cscnet_400units_numiter15_hyp_bp01():
     hyp = {
         "classification": True,
-        "network": "CSCNetTiedhyp",
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp01/2020_10_07_23_41_35/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/cscnet_400units_numiter15_hyp_bp01",
+        "network": "CSCNetTiedHyp",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_hyp_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/cscnet_400units_numiter15_hyp_bp01",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -780,22 +686,23 @@ def mnist_classification_cscnet_400units_numiter15_hyp_bp01():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_hyp_bp01_joint_betap5():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_hyp_bp01_betap5",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_hyp_bp01_betap5",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp01/2020_10_07_23_41_35/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_hyp_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
+        "network": "CSCNetTiedHyp",
         "noiseSTD": 0,
         "dictionary_dim": 28,
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 0.5,
         "stride": 1,
@@ -816,22 +723,23 @@ def mnist_cscnet_400units_numiter15_hyp_bp01_joint_betap5():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_hyp_bp01_joint_betap75():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_hyp_bp01_betap75",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_hyp_bp01_betap75",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp01/2020_10_07_23_41_35/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_hyp_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
+        "network": "CSCNetTiedHyp",
         "noiseSTD": 0,
         "dictionary_dim": 28,
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 0.75,
         "stride": 1,
@@ -852,22 +760,23 @@ def mnist_cscnet_400units_numiter15_hyp_bp01_joint_betap75():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_hyp_bp01_joint_betap95():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_hyp_bp01_betap95",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_hyp_bp01_betap95",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp01/2020_10_07_23_41_35/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_hyp_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
+        "network": "CSCNetTiedHyp",
         "noiseSTD": 0,
         "dictionary_dim": 28,
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 0.95,
         "stride": 1,
@@ -888,22 +797,23 @@ def mnist_cscnet_400units_numiter15_hyp_bp01_joint_betap95():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_cscnet_400units_numiter15_hyp_bp01_joint_beta1():
     hyp = {
-        "experiment_name": "paper/mnist/joint/cscnet_400units_numiter15_hyp_bp01_beta1",
+        "experiment_name": "mnist/joint/cscnet_400units_numiter15_hyp_bp01_beta1",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp01/2020_10_07_23_41_35/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_cscnet_tied_hyp_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
+        "network": "CSCNetTiedHyp",
         "noiseSTD": 0,
         "dictionary_dim": 28,
         "num_conv": 400,
         "D_input": 400,
         "D_output": 10,
-        "reshape": (20,20),
+        "reshape": (20, 20),
         "num_iters": 15,
         "beta": 1,
         "stride": 1,
@@ -924,109 +834,6 @@ def mnist_cscnet_400units_numiter15_hyp_bp01_joint_beta1():
         "loss_period": 5,
     }
 
-# 0.015
-@config_ingredient.named_config
-def mnist_cscnet_400units_numiter15_hyp_bp015():
-    hyp = {
-        "experiment_name": "paper/mnist/cscnet_400units_numiter15_hyp_bp015",
-        "dense": True,
-        "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
-        "noiseSTD": 0,
-        "dictionary_dim": 28,
-        "num_conv": 400,
-        "reshape": (20,20),
-        "num_iters": 15,
-        "stride": 1,
-        "split_stride": 1,
-        "L": 50,
-        "b": 0.015,
-        "twosided": False,
-        "normalize": True,
-        "batch_size": 16,
-        "num_epochs": 150,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 100,
-        "eps": 1e-15,
-        "denoising": False,
-        "info_period": 10,
-        "model_period": 10,
-        "loss_period": 10,
-    }
-
-@config_ingredient.named_config
-def mnist_classification_cscnet_400units_numiter15_hyp_bp015():
-    hyp = {
-        "classification": True,
-        "network": "CSCNetTiedhyp",
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp015/2020_10_07_23_42_20/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/cscnet_400units_numiter15_hyp_bp015",
-        "dataset": "mnist",
-        "D_input": 400,
-        "D_output": 10,
-        "batch_size": 16,
-        "num_epochs": 1000,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 1000,
-        "eps": 1e-15,
-        "info_period": 5,
-        "model_period": 5,
-        "loss_period": 5,
-    }
-
-# 0.02
-@config_ingredient.named_config
-def mnist_cscnet_400units_numiter15_hyp_bp02():
-    hyp = {
-        "experiment_name": "paper/mnist/cscnet_400units_numiter15_hyp_bp02",
-        "dense": True,
-        "dataset": "mnist",
-        "network": "CSCNetTiedhyp",
-        "noiseSTD": 0,
-        "dictionary_dim": 28,
-        "num_conv": 400,
-        "reshape": (20,20),
-        "num_iters": 15,
-        "stride": 1,
-        "split_stride": 1,
-        "L": 50,
-        "b": 0.02,
-        "twosided": False,
-        "normalize": True,
-        "batch_size": 16,
-        "num_epochs": 150,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 100,
-        "eps": 1e-15,
-        "denoising": False,
-        "info_period": 10,
-        "model_period": 10,
-        "loss_period": 10,
-    }
-
-@config_ingredient.named_config
-def mnist_classification_cscnet_400units_numiter15_hyp_bp02():
-    hyp = {
-        "classification": True,
-        "network": "CSCNetTiedhyp",
-        "model_path": "../results/paper/mnist/cscnet_400units_numiter15_hyp_bp02/2020_10_07_23_47_22/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/cscnet_400units_numiter15_hyp_bp02",
-        "dataset": "mnist",
-        "D_input": 400,
-        "D_output": 10,
-        "batch_size": 16,
-        "num_epochs": 1000,
-        "lr": 1e-3,
-        "lr_decay": 1,
-        "lr_step": 1000,
-        "eps": 1e-15,
-        "info_period": 5,
-        "model_period": 5,
-        "loss_period": 5,
-    }
 
 ###############################
 ####### densae_tied_hyp #######
@@ -1035,7 +842,7 @@ def mnist_classification_cscnet_400units_numiter15_hyp_bp02():
 @config_ingredient.named_config
 def mnist_densae_400units_5A395B_numiter15_hyp_bp01():
     hyp = {
-        "experiment_name": "paper/mnist/densae_400units_5A395B_numiter15_hyp_bp01",
+        "experiment_name": "mnist/densae_400units_5A395B_numiter15_hyp_bp01",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1044,14 +851,13 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01():
         "num_conv": 400,
         "num_conv_A": 5,
         "num_conv_B": 395,
-        "reshape": ((1,5),(5,79)),
+        "reshape": ((1, 5), (5, 79)),
         "num_iters": 15,
         "stride": 1,
         "strideA": 1,
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": True,
@@ -1066,6 +872,7 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01():
         "model_period": 10,
         "loss_period": 10,
     }
+
 
 @config_ingredient.named_config
 def mnist_classification_densae_400units_5A395B_numiter15_hyp_bp01():
@@ -1074,8 +881,8 @@ def mnist_classification_densae_400units_5A395B_numiter15_hyp_bp01():
         "classify_use_only_u": False,
         "random_remove_u": 0,
         "network": "DenSaE",
-        "model_path": "../results/paper/mnist/densae_400units_5A395B_numiter15_hyp_bp01/2020_10_08_11_35_46/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/densae_400units_5A395B_numiter15_hyp_bp01",
+        "model_path": "../results/trained_models/disjoint/model_densae_5A395B_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/densae_400units_5A395B_numiter15_hyp_bp01",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -1090,13 +897,14 @@ def mnist_classification_densae_400units_5A395B_numiter15_hyp_bp01():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap5():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_betap5",
+        "experiment_name": "mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_betap5",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_5A395B_numiter15_hyp_bp01/2020_10_08_11_35_46/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_5A395B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1106,7 +914,7 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap5():
         "num_conv_B": 395,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((1,5),(5,79)),
+        "reshape": ((1, 5), (5, 79)),
         "num_iters": 15,
         "beta": 0.5,
         "stride": 1,
@@ -1114,7 +922,6 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap5():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1130,13 +937,14 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap5():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap75():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_betap75",
+        "experiment_name": "mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_betap75",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_5A395B_numiter15_hyp_bp01/2020_10_08_11_35_46/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_5A395B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1146,7 +954,7 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap75():
         "num_conv_B": 395,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((1,5),(5,79)),
+        "reshape": ((1, 5), (5, 79)),
         "num_iters": 15,
         "beta": 0.75,
         "stride": 1,
@@ -1154,7 +962,6 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap75():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1170,13 +977,14 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap75():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap95():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_betap95",
+        "experiment_name": "mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_betap95",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_5A395B_numiter15_hyp_bp01/2020_10_08_11_35_46/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_5A395B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1186,7 +994,7 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap95():
         "num_conv_B": 395,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((1,5),(5,79)),
+        "reshape": ((1, 5), (5, 79)),
         "num_iters": 15,
         "beta": 0.95,
         "stride": 1,
@@ -1194,7 +1002,6 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap95():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1210,13 +1017,14 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_betap95():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_beta1():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_beta1",
+        "experiment_name": "mnist/joint/densae_400units_5A395B_numiter15_hyp_bp01_beta1",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_5A395B_numiter15_hyp_bp01/2020_10_08_11_35_46/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_5A395B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1226,7 +1034,7 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_beta1():
         "num_conv_B": 395,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((1,5),(5,79)),
+        "reshape": ((1, 5), (5, 79)),
         "num_iters": 15,
         "beta": 1,
         "stride": 1,
@@ -1234,7 +1042,6 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_beta1():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1250,11 +1057,12 @@ def mnist_densae_400units_5A395B_numiter15_hyp_bp01_joint_beta1():
         "loss_period": 5,
     }
 
+
 # 25A 375B
 @config_ingredient.named_config
 def mnist_densae_400units_25A375B_numiter15_hyp_bp01():
     hyp = {
-        "experiment_name": "paper/mnist/densae_400units_25A375B_numiter15_hyp_bp01",
+        "experiment_name": "mnist/densae_400units_25A375B_numiter15_hyp_bp01",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1263,14 +1071,13 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01():
         "num_conv": 400,
         "num_conv_A": 25,
         "num_conv_B": 375,
-        "reshape": ((5,5),(15,25)),
+        "reshape": ((5, 5), (15, 25)),
         "num_iters": 15,
         "stride": 1,
         "strideA": 1,
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": True,
@@ -1285,6 +1092,7 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01():
         "model_period": 10,
         "loss_period": 10,
     }
+
 
 @config_ingredient.named_config
 def mnist_classification_densae_400units_25A375B_numiter15_hyp_bp01():
@@ -1293,8 +1101,8 @@ def mnist_classification_densae_400units_25A375B_numiter15_hyp_bp01():
         "classify_use_only_u": False,
         "random_remove_u": 0,
         "network": "DenSaE",
-        "model_path": "../results/paper/mnist/densae_400units_25A375B_numiter15_hyp_bp01/2020_10_08_11_36_05/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/densae_400units_25A375B_numiter15_hyp_bp01",
+        "model_path": "../results/trained_models/disjoint/model_densae_25A375B_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/densae_400units_25A375B_numiter15_hyp_bp01",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -1309,13 +1117,14 @@ def mnist_classification_densae_400units_25A375B_numiter15_hyp_bp01():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap5():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_betap5",
+        "experiment_name": "mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_betap5",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_25A375B_numiter15_hyp_bp01/2020_10_08_11_36_05/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_25A375B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1325,7 +1134,7 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap5():
         "num_conv_B": 375,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((5,5),(15,25)),
+        "reshape": ((5, 5), (15, 25)),
         "num_iters": 15,
         "beta": 0.5,
         "stride": 1,
@@ -1333,7 +1142,6 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap5():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1349,13 +1157,14 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap5():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap75():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_betap75",
+        "experiment_name": "mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_betap75",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_25A375B_numiter15_hyp_bp01/2020_10_08_11_36_05/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_25A375B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1365,7 +1174,7 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap75():
         "num_conv_B": 375,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((5,5),(15,25)),
+        "reshape": ((5, 5), (15, 25)),
         "num_iters": 15,
         "beta": 0.75,
         "stride": 1,
@@ -1373,7 +1182,6 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap75():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1389,13 +1197,14 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap75():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap95():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_betap95",
+        "experiment_name": "mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_betap95",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_25A375B_numiter15_hyp_bp01/2020_10_08_11_36_05/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_25A375B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1405,7 +1214,7 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap95():
         "num_conv_B": 375,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((5,5),(15,25)),
+        "reshape": ((5, 5), (15, 25)),
         "num_iters": 15,
         "beta": 0.95,
         "stride": 1,
@@ -1413,7 +1222,6 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap95():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1429,13 +1237,14 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_betap95():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_beta1():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_beta1",
+        "experiment_name": "mnist/joint/densae_400units_25A375B_numiter15_hyp_bp01_beta1",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_25A375B_numiter15_hyp_bp01/2020_10_08_11_36_05/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_25A375B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1445,7 +1254,7 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_beta1():
         "num_conv_B": 375,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((5,5),(15,25)),
+        "reshape": ((5, 5), (15, 25)),
         "num_iters": 15,
         "beta": 1,
         "stride": 1,
@@ -1453,7 +1262,6 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_beta1():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1469,11 +1277,12 @@ def mnist_densae_400units_25A375B_numiter15_hyp_bp01_joint_beta1():
         "loss_period": 5,
     }
 
+
 # 50A 350B
 @config_ingredient.named_config
 def mnist_densae_400units_50A350B_numiter15_hyp_bp01():
     hyp = {
-        "experiment_name": "paper/mnist/densae_400units_50A350B_numiter15_hyp_bp01",
+        "experiment_name": "mnist/densae_400units_50A350B_numiter15_hyp_bp01",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1482,14 +1291,13 @@ def mnist_densae_400units_50A350B_numiter15_hyp_bp01():
         "num_conv": 400,
         "num_conv_A": 50,
         "num_conv_B": 350,
-        "reshape": ((5,10),(14,25)),
+        "reshape": ((5, 10), (14, 25)),
         "num_iters": 15,
         "stride": 1,
         "strideA": 1,
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": True,
@@ -1504,6 +1312,7 @@ def mnist_densae_400units_50A350B_numiter15_hyp_bp01():
         "model_period": 10,
         "loss_period": 10,
     }
+
 
 @config_ingredient.named_config
 def mnist_classification_densae_400units_50A350B_numiter15_hyp_bp01():
@@ -1512,8 +1321,8 @@ def mnist_classification_densae_400units_50A350B_numiter15_hyp_bp01():
         "classify_use_only_u": False,
         "random_remove_u": 0,
         "network": "DenSaE",
-        "model_path": "../results/paper/mnist/densae_400units_50A350B_numiter15_hyp_bp01/2020_10_08_11_36_20/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/densae_400units_50A350B_numiter15_hyp_bp01",
+        "model_path": "../results/trained_models/disjoint/model_densae_50A350B_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/densae_400units_50A350B_numiter15_hyp_bp01",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -1528,11 +1337,12 @@ def mnist_classification_densae_400units_50A350B_numiter15_hyp_bp01():
         "loss_period": 5,
     }
 
+
 # 100A 300B
 @config_ingredient.named_config
 def mnist_densae_400units_100A300B_numiter15_hyp_bp01():
     hyp = {
-        "experiment_name": "paper/mnist/densae_400units_100A300B_numiter15_hyp_bp01",
+        "experiment_name": "mnist/densae_400units_100A300B_numiter15_hyp_bp01",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1541,14 +1351,13 @@ def mnist_densae_400units_100A300B_numiter15_hyp_bp01():
         "num_conv": 400,
         "num_conv_A": 100,
         "num_conv_B": 300,
-        "reshape": ((10,10),(15,20)),
+        "reshape": ((10, 10), (15, 20)),
         "num_iters": 15,
         "stride": 1,
         "strideA": 1,
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": True,
@@ -1563,6 +1372,7 @@ def mnist_densae_400units_100A300B_numiter15_hyp_bp01():
         "model_period": 10,
         "loss_period": 10,
     }
+
 
 @config_ingredient.named_config
 def mnist_classification_densae_400units_100A300B_numiter15_hyp_bp01():
@@ -1571,8 +1381,8 @@ def mnist_classification_densae_400units_100A300B_numiter15_hyp_bp01():
         "classify_use_only_u": False,
         "random_remove_u": 0,
         "network": "DenSaE",
-        "model_path": "../results/paper/mnist/densae_400units_100A300B_numiter15_hyp_bp01/2020_10_08_11_40_00/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/densae_400units_100A300B_numiter15_hyp_bp01",
+        "model_path": "../results/trained_models/disjoint/model_densae_100A300B_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/densae_400units_100A300B_numiter15_hyp_bp01",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -1587,11 +1397,12 @@ def mnist_classification_densae_400units_100A300B_numiter15_hyp_bp01():
         "loss_period": 5,
     }
 
+
 # 200A 200B
 @config_ingredient.named_config
 def mnist_densae_400units_200A200B_numiter15_hyp_bp01():
     hyp = {
-        "experiment_name": "paper/mnist/densae_400units_200A200B_numiter15_hyp_bp01",
+        "experiment_name": "mnist/densae_400units_200A200B_numiter15_hyp_bp01",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1600,14 +1411,13 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01():
         "num_conv": 400,
         "num_conv_A": 200,
         "num_conv_B": 200,
-        "reshape": ((10,20),(10,20)),
+        "reshape": ((10, 20), (10, 20)),
         "num_iters": 15,
         "stride": 1,
         "strideA": 1,
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": True,
@@ -1623,6 +1433,7 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01():
         "loss_period": 10,
     }
 
+
 @config_ingredient.named_config
 def mnist_classification_densae_400units_200A200B_numiter15_hyp_bp01():
     hyp = {
@@ -1630,8 +1441,8 @@ def mnist_classification_densae_400units_200A200B_numiter15_hyp_bp01():
         "classify_use_only_u": False,
         "random_remove_u": 0,
         "network": "DenSaE",
-        "model_path": "../results/paper/mnist/densae_400units_200A200B_numiter15_hyp_bp01/2020_10_08_11_41_31/model_epoch149.pt",
-        "experiment_name": "paper/mnist/classification/densae_400units_200A200B_numiter15_hyp_bp01",
+        "model_path": "../results/trained_models/disjoint/model_densae_200A200B_disjoint_ae.pt",
+        "experiment_name": "mnist/disjoint/densae_400units_200A200B_numiter15_hyp_bp01",
         "dataset": "mnist",
         "D_input": 400,
         "D_output": 10,
@@ -1646,13 +1457,14 @@ def mnist_classification_densae_400units_200A200B_numiter15_hyp_bp01():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap5():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_betap5",
+        "experiment_name": "mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_betap5",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_200A200B_numiter15_hyp_bp01/2020_10_08_11_41_31/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_200A200B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1662,7 +1474,7 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap5():
         "num_conv_B": 200,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((10,20),(10,20)),
+        "reshape": ((10, 20), (10, 20)),
         "num_iters": 15,
         "beta": 0.5,
         "stride": 1,
@@ -1670,7 +1482,6 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap5():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1686,13 +1497,14 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap5():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap75():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_betap75",
+        "experiment_name": "mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_betap75",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_200A200B_numiter15_hyp_bp01/2020_10_08_11_41_31/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_200A200B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1702,7 +1514,7 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap75():
         "num_conv_B": 200,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((10,20),(10,20)),
+        "reshape": ((10, 20), (10, 20)),
         "num_iters": 15,
         "beta": 0.75,
         "stride": 1,
@@ -1710,7 +1522,6 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap75():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1726,13 +1537,14 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap75():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap95():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_betap95",
+        "experiment_name": "mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_betap95",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_200A200B_numiter15_hyp_bp01/2020_10_08_11_41_31/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_200A200B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1742,7 +1554,7 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap95():
         "num_conv_B": 200,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((10,20),(10,20)),
+        "reshape": ((10, 20), (10, 20)),
         "num_iters": 15,
         "beta": 0.95,
         "stride": 1,
@@ -1750,7 +1562,6 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap95():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
@@ -1766,13 +1577,14 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_betap95():
         "loss_period": 5,
     }
 
+
 @config_ingredient.named_config
 def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_beta1():
     hyp = {
-        "experiment_name": "paper/mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_beta1",
+        "experiment_name": "mnist/joint/densae_400units_200A200B_numiter15_hyp_bp01_beta1",
         "train_joint_ae_class": True,
         "warm_start": True,
-        "model_path": "../results/paper/mnist/densae_400units_200A200B_numiter15_hyp_bp01/2020_10_08_11_41_31/model_epoch149.pt",
+        "model_path": "../results/trained_models/disjoint/model_densae_200A200B_disjoint_ae.pt",
         "dense": True,
         "dataset": "mnist",
         "network": "DenSaE",
@@ -1782,7 +1594,7 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_beta1():
         "num_conv_B": 200,
         "D_input": 400,
         "D_output": 10,
-        "reshape": ((10,20),(10,20)),
+        "reshape": ((10, 20), (10, 20)),
         "num_iters": 15,
         "beta": 1,
         "stride": 1,
@@ -1790,7 +1602,6 @@ def mnist_densae_400units_200A200B_numiter15_hyp_bp01_joint_beta1():
         "strideB": 1,
         "split_stride": 1,
         "L": 50,
-        # "b": 0.01,
         "lam": 0.5,
         "twosided": False,
         "normalize": False,
