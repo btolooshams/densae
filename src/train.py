@@ -77,6 +77,7 @@ def run(cfg):
     # disjoint classification training
     if hyp["classification"]:
         net = torch.load(hyp["model_path"], map_location=hyp["device"])
+        net.device = hyp["device"]
         classifier = model.Classifier(hyp)
 
         enc_tr_loader, enc_val_loader, enc_te_loader = generator.get_encoding_loaders(
