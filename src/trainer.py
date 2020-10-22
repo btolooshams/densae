@@ -7,9 +7,11 @@ trainer
 """
 
 import torch
+import torch.nn.functional as F
 from tqdm import tqdm
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 
 import utils, plot_helpers
 
