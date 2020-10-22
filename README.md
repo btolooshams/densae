@@ -1,6 +1,6 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-# DenSaE (dense and sparse auto-encoder)
+# DenSaE (dense and sparse autoencoder)
 
 ### Trained Models
 
@@ -26,6 +26,9 @@ def exp1():
         "noiseSTD": 15,
         "dictionary_dim": 7,
         "stride": 5,
+        "strideA": 5,
+        "strideB": 5,
+        "split_stride": 5,
         "num_conv_A": 1,
         "num_conv_B": 63,
         "L": 10,
@@ -38,6 +41,8 @@ def exp1():
         "lr_decay": 0.80,
         "lr_step": 50,
         "info_period": 10000,
+        "model_period": 10000,
+        "loss_period": 10000,
         "crop_dim": (128, 128),
         "lam": 0.085,
         "rho": 1e10,
