@@ -10,6 +10,7 @@ import matplotlib as mpl
 import seaborn as sns
 import numpy as np
 import torch
+import matplotlib.gridspec as gridspec
 
 
 def newfig(scale, scale_height=1, square=False):
