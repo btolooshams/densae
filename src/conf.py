@@ -429,12 +429,10 @@ def noise75_densae_32A_32B_hyp():
 @config_ingredient.named_config
 def test():
     hyp = {
-        "experiment_name": "test",
-        "network": "DenSaE",
-        "num_conv_A": 32,
-        "num_conv_B": 32,
-        "lam": 0.56,
-        "noiseSTD": 75,
+        "experiment_name": "noise50_cscnet_tied_ls",
+        "network": "CSCNetTiedLS",
+        "num_conv": 64,
+        "noiseSTD": 50,
     }
 
 ###############################
