@@ -40,7 +40,7 @@ ex = Experiment("train", ingredients=[config_ingredient])
 import resource
 
 rlimit = resource.getrlimit(resource.RLIMIT_NOFILE)
-# resource.setrlimit(resource.RLIMIT_NOFILE, (20480, rlimit[1]))
+resource.setrlimit(resource.RLIMIT_NOFILE, (20480, rlimit[1]))
 
 
 @ex.automain
