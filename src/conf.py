@@ -425,6 +425,41 @@ def noise75_densae_32A_32B_hyp():
 ##########################################################
 ##########################################################
 
+# test
+@config_ingredient.named_config
+def test():
+    hyp = {
+        "experiment_name": "mnist/test",
+        "dense": True,
+        "dataset": "mnist",
+        "network": "DenSaE",
+        "noiseSTD": 0,
+        "dictionary_dim": 28,
+        "num_conv": 400,
+        "num_conv_A": 5,
+        "num_conv_B": 395,
+        "reshape": ((1, 5), (5, 79)),
+        "num_iters": 2,
+        "stride": 1,
+        "strideA": 1,
+        "strideB": 1,
+        "split_stride": 1,
+        "L": 50,
+        "lam": 0.5,
+        "twosided": False,
+        "normalize": True,
+        "batch_size": 16,
+        "num_epochs": 150,
+        "lr": 1e-3,
+        "lr_decay": 1,
+        "lr_step": 100,
+        "eps": 1e-15,
+        "denoising": False,
+        "info_period": 1,
+        "model_period": 1,
+        "loss_period": 1,
+    }
+
 ###############################
 ####### cscnet_tied_ls ########
 ###############################
