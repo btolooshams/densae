@@ -501,7 +501,7 @@ def test_network_joint(data_loader, net, classifier, hyp):
 
             _, out = net(img)
 
-            if hyp["network"] == "DenSaEv2" or hyp["network"] == "DenSaE":
+            if hyp["network"] == "DenSaE":
                 x, u, _, _ = out
 
                 u = u.reshape(-1, u.shape[1] * u.shape[2] * u.shape[3])
