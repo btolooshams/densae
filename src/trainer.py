@@ -462,8 +462,6 @@ def test_network(data_loader, net, hyp):
 
     device = hyp["device"]
 
-    net.eval()
-
     with torch.no_grad():
         num_correct = 0
         num_total = 0
@@ -482,8 +480,6 @@ def test_network(data_loader, net, hyp):
             num_total += c.size()[0]
 
     acc = num_correct / num_total
-
-    net.train()
 
     return acc
 

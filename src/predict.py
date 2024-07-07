@@ -37,7 +37,7 @@ def predict():
     name = "noise15_cscnet_tied_ls"
     random_date = "2020_05_27_14_51_29"
     csc1_densae0 = 1
-    plot_bias = 1
+    plot_bias = 0
 
     num_epochs = 249
 
@@ -58,38 +58,6 @@ def predict():
 
     net_init.device = device
     net.device = device
-
-    if plot_bias:
-        bias = (torch.squeeze(net.b)).clone().detach().cpu().numpy()
-
-        # upadte plot parameters
-        plot_helpers.update_plot_parameters(
-            text_font=25, title_font=25, axes_font=25, legend_font=25, number_font=25,
-        )
-
-        fig = plot_helpers.newfig(scale=1, scale_height=1)
-        ax = fig.add_subplot(111)
-        ax.grid(False)
-        hist, bins = np.histogram(np.log10(np.abs(bias)), 100)
-        width = 0.9 * (bins[1] - bins[0])
-        center = (bins[:-1] + bins[1:]) / 2
-
-        plt.bar(
-            center, hist, align="center", width=width, linewidth=width,
-        )
-
-        plt.ylim(0, 10)
-        plt.ylabel("$\mathrm{Count}$", fontsize=30)
-        plt.xlabel("$\mathrm{Filter\;biases\;(log\;scale)}$", fontsize=30)
-
-        ax.spines["right"].set_visible(False)
-        ax.spines["top"].set_visible(False)
-        plt.subplots_adjust(wspace=None, hspace=None)
-        ax.grid(False)
-        fig.tight_layout(pad=0.1, w_pad=0.0, h_pad=0)
-        plt.savefig(os.path.join(PATH, "bias_{}.png".format(noiseSTD)))
-
-    exit()
 
     if csc1_densae0:
         B_init = net_init.get_param("B").clone().detach().cpu().numpy()
@@ -235,5 +203,39 @@ def predict():
                     bu_hat.clone(),
                     os.path.join(PATH, "{}_bu_hat.png".format(img_list[ctr])),
                 )
+
+            if plot_bias:
+                bias = (torch.squeeze(net.b)).clone().detach().cpu().numpy()
+
+                # upadte plot parameters
+                plot_helpers.update_plot_parameters(
+                    text_font=25,
+                    title_font=25,
+                    axes_font=25,
+                    legend_font=25,
+                    number_font=25,
+                )
+
+                fig = plot_helpers.newfig(scale=1, scale_height=1)
+                ax = fig.add_subplot(111)
+                ax.grid(False)
+                hist, bins = np.histogram(np.log10(np.abs(bias)), 100)
+                width = 0.9 * (bins[1] - bins[0])
+                center = (bins[:-1] + bins[1:]) / 2
+
+                plt.bar(
+                    center, hist, align="center", width=width, linewidth=width,
+                )
+
+                plt.ylim(0, 10)
+                plt.ylabel("$\mathrm{Count}$", fontsize=30)
+                plt.xlabel("$\mathrm{Filter\;biases\;(log\;scale)}$", fontsize=30)
+
+                ax.spines["right"].set_visible(False)
+                ax.spines["top"].set_visible(False)
+                plt.subplots_adjust(wspace=None, hspace=None)
+                ax.grid(False)
+                fig.tight_layout(pad=0.1, w_pad=0.0, h_pad=0)
+                plt.savefig(os.path.join(PATH, "bias_{}.eps".format(noiseSTD)))
 
             ctr += 1
