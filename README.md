@@ -1,5 +1,9 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+Official code repository for the image experiments of "Discriminative reconstruction via simultaneous dense and sparse coding".
+
+[openreview.net/forum?id=FkgM06HEbk](openreview.net/forum?id=FkgM06HEbk)
+
 # DenSaE (dense and sparse autoencoder)
 
 ### Trained Models
